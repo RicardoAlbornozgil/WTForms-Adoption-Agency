@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adopt</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='app.css') }}" rel="stylesheet">
+</head>
+<body class="d-flex flex-column">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ url_for('list_pets') }}">
+            <button class="btn btn-info">Pet List</button>
+        </a>
+    </nav>
+
+    <header class="container text-center mt-4 ">
+        {% block header %}
+        {% endblock %}
+    </header>
+
+    <main class="container flex-grow-1">
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer class="mt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    &copy; 2024 My Pet Adoption App
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
