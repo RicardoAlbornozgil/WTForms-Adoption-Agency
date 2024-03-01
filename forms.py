@@ -10,7 +10,7 @@ class AddPetForm(FlaskForm):
 
     name = StringField(
         "Pet Name",
-        validators=[InputRequired()],
+        validators=[DataRequired()],
     )
 
     species = StringField(

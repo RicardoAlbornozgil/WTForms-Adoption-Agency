@@ -1,9 +1,7 @@
-from flask import Flask, render_template, flash, redirect, url_for, jsonify
+from flask import Flask, render_template, flash, redirect, url_for, jsonify, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Pet
 from forms import AddPetForm, EditPetForm
-
-
 
 # Create Flask app
 app = Flask(__name__)
@@ -45,11 +43,22 @@ def add_pet():
 
     if form.validate_on_submit():
         data = {k: v for k, v in form.data.items() if k != "csrf_token"}
-        new_pet = Pet(**data)
-        db.session.add(new_pet)
-        db.session.commit()
-        flash(f"{new_pet.name} added.")
-        return redirect(url_for('list_pets'))
+        print("Form data", data)
+        try:
+            new_pet = Pet(**data)
+            db.session.add(new_pet)
+            db.session.commit()
+            flash(f"{new_pet.name} added.")
+
+            # Store the new_pet id in the session
+            session['new_pet_id'] = new_pet.id
+            return redirect(url_for('list_pets'))
+        except Exception as e:
+            print("Error committing to database:", e)  # Print any database commit errors
+            db.session.rollback()  # Rollback transaction in case of error
+            flash("Error adding pet. Please try again.", "error")
+    else:
+        print("Form validation failed:", form.errors)  # Print form validation errors
 
     return render_template("/pets/add.html", form=form)
 

@@ -14,25 +14,25 @@ class Pet(db.Model):
     age = db.Column(db.Integer)
     photo_url = db.Column(db.Text)
     notes = db.Column(db.Text)  
-    available = db.Column(db.Boolean)  
-
-    # Define species_id as a foreign key referencing Species.id
-    species_id = db.Column(db.Integer, db.ForeignKey('species.id', ondelete='CASCADE'), nullable=False)
+    available = db.Column(db.Boolean, nullable=False, default=True)  
+    species = db.Column(db.Text)
+    # # Define species_id as a foreign key referencing Species.id
+    # species_id = db.Column(db.Integer, db.ForeignKey('species.id', ondelete='CASCADE'), nullable=False)
     
-    # Define a relationship to Species without cascade delete
-    species = db.relationship("Species", backref="pets", single_parent=True)
+    # # Define a relationship to Species without cascade delete
+    # species = db.relationship("Species", backref="pets", single_parent=True)
 
     def image_url(self):
         """Return image for pet -- bespoke or generic."""
         return self.photo_url or DEFAULT_IMAGE_URL
 
 
-class Species(db.Model):
-    """Different Species"""
-    __tablename__ = "species"
+# class Species(db.Model):
+#     """Different Species"""
+#     __tablename__ = "species"
     
-    id = db.Column(db.Integer, primary_key=True)
-    species_name = db.Column(db.Text, nullable=False)
+#     id = db.Column(db.Integer, primary_key=True)
+#     species_name = db.Column(db.Text, nullable=False)
 
 
 def connect_db(app):
